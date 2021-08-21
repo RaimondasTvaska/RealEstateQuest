@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RealEstateQuest.Models;
+using RealEstateQuest.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,16 @@ namespace RealEstateQuest.Controllers
 {
     public class BrokerController : Controller
     {
+        private BrokerDBService _brokerDB;
+
+        public BrokerController(BrokerDBService brokerDB)
+        {
+            _brokerDB = brokerDB;
+        }
         // GET: BrokerController
         public ActionResult Index()
         {
-            return View();
+            return View(_brokerDB.AllBrokers());
         }
 
         // GET: BrokerController/Details/5
@@ -29,17 +37,11 @@ namespace RealEstateQuest.Controllers
 
         // POST: BrokerController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(BrokerModel broker)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _brokerDB.AddBroker(broker);
+
+            return RedirectToAction("Index");
         }
 
         // GET: BrokerController/Edit/5
@@ -50,7 +52,6 @@ namespace RealEstateQuest.Controllers
 
         // POST: BrokerController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
             try
@@ -71,7 +72,6 @@ namespace RealEstateQuest.Controllers
 
         // POST: BrokerController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

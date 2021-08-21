@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RealEstateQuest.Models;
+using RealEstateQuest.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,16 @@ namespace RealEstateQuest.Controllers
 {
     public class CompanyController : Controller
     {
-        // GET: CompanyController
+        private CompanyDBService _companyDB;
+
+        public CompanyController(CompanyDBService companyDB)
+        {
+            _companyDB = companyDB;
+        }
+        // GET: BrokerController
         public ActionResult Index()
         {
-            return View();
+            return View(_companyDB.AllCompanies());
         }
 
         // GET: CompanyController/Details/5
@@ -29,17 +37,11 @@ namespace RealEstateQuest.Controllers
 
         // POST: CompanyController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CompanyModel company)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _companyDB.AddCompany(company);
+
+            return RedirectToAction("Index");
         }
 
         // GET: CompanyController/Edit/5
@@ -50,7 +52,6 @@ namespace RealEstateQuest.Controllers
 
         // POST: CompanyController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
             try
@@ -71,7 +72,6 @@ namespace RealEstateQuest.Controllers
 
         // POST: CompanyController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RealEstateQuest.Models;
+using RealEstateQuest.Services;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,10 +12,28 @@ namespace RealEstateQuest.Controllers
 {
     public class ApartmentController : Controller
     {
+        private ApartmentDBService _apartmentDB;
+        private CompanyDBService _companyDB;
+        private BrokerDBService _brokerDB;
+        private RealEstateDBService _realEstateDB;
+        private SqlConnection _connection;
+
+        public ApartmentController(ApartmentDBService apartmentDB, CompanyDBService companyDB, BrokerDBService brokerDB, RealEstateDBService realEstateDB, SqlConnection connection)
+        {
+            _apartmentDB = apartmentDB;
+            _companyDB = companyDB;
+            _brokerDB = brokerDB;
+            _realEstateDB = realEstateDB;
+            _connection = connection;
+        }
+
+
+
+
         // GET: ApartmentsController
         public ActionResult Index()
         {
-            return View();
+            return View(_realEstateDB.AllRealEstates());
         }
 
         // GET: ApartmentsController/Details/5
@@ -29,17 +50,11 @@ namespace RealEstateQuest.Controllers
 
         // POST: ApartmentsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(RealEstateModel realEstate)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _realEstateDB.AddNewRealEstate(realEstate);
+
+            return RedirectToAction("Index");
         }
 
         // GET: ApartmentsController/Edit/5
@@ -50,7 +65,6 @@ namespace RealEstateQuest.Controllers
 
         // POST: ApartmentsController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
             try
@@ -71,7 +85,6 @@ namespace RealEstateQuest.Controllers
 
         // POST: ApartmentsController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
