@@ -45,14 +45,20 @@ namespace RealEstateQuest.Controllers
         // GET: ApartmentsController/Create
         public ActionResult Create()
         {
-            return View();
+            RealEstateModel realEstates = new()
+            {
+                Companies = _companyDB.AllCompanies(),
+                Apartments = _apartmentDB.AllApartments(),
+            };
+            return View(realEstates);
         }
 
         // POST: ApartmentsController/Create
         [HttpPost]
-        public ActionResult Create(RealEstateModel realEstate)
+        public ActionResult Create(RealEstateModel realEstates)
         {
-            _realEstateDB.AddNewRealEstate(realEstate);
+            
+            _apartmentDB.AddApartment(realEstates);
 
             return RedirectToAction("Index");
         }

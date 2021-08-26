@@ -1,4 +1,4 @@
-﻿@model RealEstateQuest.Models.CompanyModel
+﻿@model RealEstateModel
 
 @{
     ViewData["Title"] = "Create";
@@ -14,25 +14,33 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="CompanyName" class="control-label"></label>
-                <input asp-for="CompanyName" class="form-control" />
-                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                <label asp-for="CompanyAddInformation.CompanyName" class="control-label"></label>
+                <input asp-for="CompanyAddInformation.CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyAddInformation.CompanyName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
+                <label asp-for="CompanyAddInformation.City" class="control-label"></label>
+                <input asp-for="CompanyAddInformation.City" class="form-control" />
+                <span asp-validation-for="CompanyAddInformation.City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" />
-                <span asp-validation-for="Street" class="text-danger"></span>
+                <label asp-for="CompanyAddInformation.Street" class="control-label"></label>
+                <input asp-for="CompanyAddInformation.Street" class="form-control" />
+                <span asp-validation-for="CompanyAddInformation.Street" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HouseFlatNumber" class="control-label"></label>
-                <input asp-for="HouseFlatNumber" class="form-control" />
-                <span asp-validation-for="HouseFlatNumber" class="text-danger"></span>
+                <label asp-for="CompanyAddInformation.HouseFlatNumber" class="control-label"></label>
+                <input asp-for="CompanyAddInformation.HouseFlatNumber" class="form-control" />
+                <span asp-validation-for="CompanyAddInformation.HouseFlatNumber" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+                <label asp-for="" class="control-label"></label>
+                <div>
+                    @Html.DropDownListFor(x => x.Brokers, new MultiSelectList(Model.Brokers, "Id", "FullName"), new {multiple = "multiple", @class = "form-control"})
+                </div>
+                
+            </div>*@
+
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

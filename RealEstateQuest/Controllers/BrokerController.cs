@@ -47,21 +47,18 @@ namespace RealEstateQuest.Controllers
         // GET: BrokerController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            BrokerModel broker = _brokerDB.AllBrokers().FirstOrDefault(b => b.Id == id);
+            RealEstateModel realEstateModel = new();
+            return View(realEstateModel);
         }
 
         // POST: BrokerController/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, BrokerModel broker)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _brokerDB.EditBroker(broker);
+
+            return RedirectToAction("Edit");
         }
 
         // GET: BrokerController/Delete/5

@@ -40,8 +40,11 @@
                 @Html.DisplayNameFor(model => model.ApartmentAddInformation.Company_Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApartmentAddInformation.Broker_Id)
+                @Html.DisplayNameFor(model => model.CompanyAddInformation.CompanyName)
             </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.ApartmentAddInformation.Broker_Id)
+        </th>*@
             <th></th>
         </tr>
     </thead>
@@ -76,8 +79,11 @@
                 @Html.DisplayFor(modelItem => item.Company_Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Broker_Id)
+                @Html.DisplayFor(model => model.CompanyAddInformation.CompanyName)
             </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Broker_Id)
+        </td>*@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |

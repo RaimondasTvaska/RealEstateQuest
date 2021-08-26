@@ -30,26 +30,28 @@ namespace RealEstateQuest.Services
             RealEstateModel realEstates = new RealEstateModel()
 
             {
-                Companies = _companyDB.AllCompanies()
+                Companies = _companyDB.AllCompanies(),
+                Apartments = _apartmentDB.AllApartments(),
+                Brokers = _brokerDB.AllBrokers()
             };
 
             return realEstates;
         }
         public RealEstateModel AddNewRealEstate()
         {
-            List<ApartmentModel> apartments = new();
-            apartments.Add(new ApartmentModel());
+            List<ApartmentModel> apartmentsList = new();
+            apartmentsList.Add(new ApartmentModel());
 
-            RealEstateModel realEstate = new RealEstateModel()
+            RealEstateModel realEstates = new()
 
             {
-                Apartments = _apartmentDB.AllApartments(),
+                Apartments = apartmentsList,
                 Companies = _companyDB.AllCompanies(),
                 Brokers = _brokerDB.AllBrokers()
 
             };
 
-            return realEstate;
+            return realEstates;
         }
     }
 }

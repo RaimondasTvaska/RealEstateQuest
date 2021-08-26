@@ -1,0 +1,20 @@
+﻿@model RealEstateModel
+
+<h2>Atnaujinimas</h2>
+
+@using (Html.BeginForm("Edit", "Broker", FormMethod.Post))
+{
+    <div class="container-full" style="background-color:aliceblue">
+        <div class="container">
+            @Html.LabelFor(x => x.Broker.FirstName)
+            @Html.TextBoxFor(x => x.Broker.FirstName)
+
+            @Html.LabelFor(x => x.Broker.Surname)
+            @Html.TextBoxFor(x => x.Broker.Surname)
+
+
+
+            <input type="submit" value="Submit" />
+        </div>
+    </div>
+}

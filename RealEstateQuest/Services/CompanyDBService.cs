@@ -22,7 +22,7 @@ namespace RealEstateQuest.Services
             List<CompanyModel> companies = new();
 
             _connection.Open();
-            using var command = new SqlCommand("SELECT * FROM dbo.Companies;", _connection);
+            using var command = new SqlCommand($@"SELECT * FROM dbo.Companies;", _connection);
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -40,15 +40,15 @@ namespace RealEstateQuest.Services
 
             return companies;
         }
-        public void AddCompany(CompanyModel company)
+        public void AddCompany(RealEstateModel realEstate)
         {
             _connection.Open();
 
-            string insertText = $"insert into dbo.Companies (Company_Name, City, Street, House_Flat_Number) " +
-                $"values(N'{company.CompanyName}'," +
-                $" N'{company.City}'" +
-                $" N'{company.Street}'" +
-                $" '{company.HouseFlatNumber}') ";
+            string insertText = @$"insert into dbo.Companies (Company_Name, City, Street, House_Flat_Number) 
+                values(N'{realEstate.CompanyAddInformation.CompanyName}',
+                 N'{realEstate.CompanyAddInformation.City}',
+                 N'{realEstate.CompanyAddInformation.Street}',
+                '{realEstate.CompanyAddInformation.HouseFlatNumber}') ";
 
             SqlCommand command = new SqlCommand(insertText, _connection);
             command.ExecuteNonQuery();

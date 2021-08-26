@@ -12,14 +12,23 @@ namespace RealEstateQuest.Controllers
     public class CompanyController : Controller
     {
         private CompanyDBService _companyDB;
+        private RealEstateDBService _realEstateDB;
+        private BrokerDBService _brokerDB;
 
-        public CompanyController(CompanyDBService companyDB)
+        public CompanyController(CompanyDBService companyDB, RealEstateDBService realEstateDB, BrokerDBService brokerDB)
         {
             _companyDB = companyDB;
+            _realEstateDB = realEstateDB;
+            _brokerDB = brokerDB;
         }
+
+
         // GET: BrokerController
         public ActionResult Index()
         {
+            var realEstateModel = new RealEstateModel();
+            realEstateModel.Companies = _companyDB.AllCompanies();
+            realEstateModel.Brokers = _brokerDB.AllBrokers();
             return View(_companyDB.AllCompanies());
         }
 
@@ -32,14 +41,18 @@ namespace RealEstateQuest.Controllers
         // GET: CompanyController/Create
         public ActionResult Create()
         {
-            return View();
+            RealEstateModel realEstate = new()
+            {
+                Companies = _companyDB.AllCompanies(),
+            };
+            return View(realEstate);
         }
 
         // POST: CompanyController/Create
         [HttpPost]
-        public ActionResult Create(CompanyModel company)
+        public ActionResult Create(RealEstateModel realEstate)
         {
-            _companyDB.AddCompany(company);
+            _companyDB.AddCompany(realEstate);
 
             return RedirectToAction("Index");
         }

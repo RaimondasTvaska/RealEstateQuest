@@ -53,6 +53,20 @@ namespace RealEstateQuest.Services
 
 
         }
+        public void EditBroker(BrokerModel broker)
+        {
+            _connection.Open();
+
+            string insertText = @$"update dbo.Brokers set First_Name = N'{broker.FirstName}' , Surname = N'{broker.Surname}' 
+                where Id = '{broker.Id}';";
+
+            SqlCommand command = new SqlCommand(insertText, _connection);
+            command.ExecuteNonQuery();
+
+            _connection.Close();
+
+           
+        }
     }
 }
 
