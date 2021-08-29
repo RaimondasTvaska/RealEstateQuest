@@ -11,6 +11,7 @@ namespace RealEstateQuest.Models
         public List<ApartmentModel> Apartments { get; set; }
         public CompanyModel CompanyAddInformation { get; set; }
         public List<CompanyModel> Companies{ get; set; }
+        public int[] CompaniesIds { get; set; }
         public int[] BrokersIds { get; set; }
         public BrokerModel Broker { get; set; }
         public List<BrokerModel> Brokers { get; set; }

@@ -8,13 +8,13 @@ namespace RealEstateQuest.Models
     public class BrokerModel
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
+        public string First_Name { get; set; }
         public string Surname { get; set; }
         public string FullName
         {
             get
             {
-                return FirstName + " " + Surname;
+                return First_Name + " " + Surname;
             }
         }
     }

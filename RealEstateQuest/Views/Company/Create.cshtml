@@ -33,13 +33,13 @@
                 <input asp-for="CompanyAddInformation.HouseFlatNumber" class="form-control" />
                 <span asp-validation-for="CompanyAddInformation.HouseFlatNumber" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="" class="control-label"></label>
-                <div>
-                    @Html.DropDownListFor(x => x.Brokers, new MultiSelectList(Model.Brokers, "Id", "FullName"), new {multiple = "multiple", @class = "form-control"})
-                </div>
+            <div class="form-group">
                 
-            </div>*@
+                @*<div>
+                    @Html.DropDownListFor(x => x.Brokers, new MultiSelectList(Model.Brokers, "Id", "FullName"), new {multiple = "multiple", @class = "form-control"})
+                </div>*@
+                
+            </div>
 
 
             <div class="form-group">

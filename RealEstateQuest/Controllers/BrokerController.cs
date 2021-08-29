@@ -12,10 +12,12 @@ namespace RealEstateQuest.Controllers
     public class BrokerController : Controller
     {
         private BrokerDBService _brokerDB;
+        private CompanyDBService _companyDB;
 
-        public BrokerController(BrokerDBService brokerDB)
+        public BrokerController(BrokerDBService brokerDB, CompanyDBService companyDB)
         {
             _brokerDB = brokerDB;
+            _companyDB = companyDB;
         }
         // GET: BrokerController
         public ActionResult Index()
@@ -32,14 +34,20 @@ namespace RealEstateQuest.Controllers
         // GET: BrokerController/Create
         public ActionResult Create()
         {
-            return View();
+            RealEstateModel realEstate = new()
+            {
+                Companies = _companyDB.AllCompanies(),
+                
+
+            };
+            return View(realEstate);
         }
 
         // POST: BrokerController/Create
         [HttpPost]
-        public ActionResult Create(BrokerModel broker)
+        public ActionResult Create(RealEstateModel realEstate)
         {
-            _brokerDB.AddBroker(broker);
+            _brokerDB.AddBroker(realEstate);
 
             return RedirectToAction("Index");
         }
@@ -48,17 +56,23 @@ namespace RealEstateQuest.Controllers
         public ActionResult Edit(int id)
         {
             BrokerModel broker = _brokerDB.AllBrokers().FirstOrDefault(b => b.Id == id);
-            RealEstateModel realEstateModel = new();
+            List<CompanyModel> companies = _companyDB.AllCompanies();
+            RealEstateModel realEstateModel = new()
+            {
+                Broker = broker,
+                Companies = companies
+            };
             return View(realEstateModel);
         }
 
         // POST: BrokerController/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, BrokerModel broker)
+        public ActionResult Edit(int id, RealEstateModel realEstate)
         {
-            _brokerDB.EditBroker(broker);
+            
+            _brokerDB.EditBroker(realEstate);
 
-            return RedirectToAction("Edit");
+            return RedirectToAction("Index");
         }
 
         // GET: BrokerController/Delete/5

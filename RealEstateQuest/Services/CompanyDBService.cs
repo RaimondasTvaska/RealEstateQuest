@@ -40,8 +40,9 @@ namespace RealEstateQuest.Services
 
             return companies;
         }
-        public void AddCompany(RealEstateModel realEstate)
+        public int AddCompany(RealEstateModel realEstate)
         {
+            int companyId = 0;
             _connection.Open();
 
             string insertText = @$"insert into dbo.Companies (Company_Name, City, Street, House_Flat_Number) 
@@ -51,11 +52,32 @@ namespace RealEstateQuest.Services
                 '{realEstate.CompanyAddInformation.HouseFlatNumber}') ";
 
             SqlCommand command = new SqlCommand(insertText, _connection);
-            command.ExecuteNonQuery();
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                companyId = Convert.ToInt32(reader.GetDecimal(0));
+            }
+            reader.Close();
+            foreach (var brokerId in realEstate.Brokers)
+            {
+                command = new($"insert into dbo.CompanyBroker (CompanyId, BrokerId) " +
+                    $"values('{companyId}'," +
+                    $" '{brokerId}') ;", _connection);
+                command.ExecuteNonQuery();
 
+            }
             _connection.Close();
-
-
+            
+            return companyId;
         }
+
+        //public List<ApartmentModel> GetCompanyApartments (int companyId)
+        //{
+        //    List<ApartmentModel> companyApartments = new();
+        //    _connection.Open();
+        //    SqlCommand command = new($@"SELECT *, CONCAT(City, ' ', Street, ' ', HouseNo, ' ', FlatNo, ' ' )
+        //                                FROM Apartments
+        //                                WHERE CompanyId = {companyId};", _connection);
+        //}
     }
 }
