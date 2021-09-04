@@ -51,9 +51,8 @@
             <div class="form-group">
                 <label asp-for="CompanyAddInformation" class="control-label"></label>
                 <div>
-                    @Html.DropDownListFor(x => x.Companies, new MultiSelectList(Model.Companies, "Id", "CompanyName"), new { multiple = "multiple", @class = "form-control" })
+                    @Html.DropDownListFor(x => x.ApartmentAddInformation.Company_Id, new SelectList(Model.Companies, "Id", "CompanyName"), new { multiple = "multiple", @class = "form-control" })
                 </div>
-
             </div>
 
             <div class="form-group">

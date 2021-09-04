@@ -12,5 +12,6 @@ namespace RealEstateQuest.Models
         public string City { get; set; }
         public string Street { get; set; }
         public string HouseFlatNumber { get; set; }
+        List<int> Brokers { get; set; }
     }
 }

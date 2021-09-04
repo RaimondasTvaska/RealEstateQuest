@@ -71,6 +71,19 @@ namespace RealEstateQuest.Services
             return companyId;
         }
 
+        public void DeleteBrokerCompanies(int id)
+        {
+            _connection.Open();
+
+            string insertText = @$"delete from dbo.CompanyBroker 
+                                where BrokerId = '{id}';";
+
+            SqlCommand command = new SqlCommand(insertText, _connection);
+            command.ExecuteNonQuery();
+            _connection.Close();
+
+        }
+
         //public List<ApartmentModel> GetCompanyApartments (int companyId)
         //{
         //    List<ApartmentModel> companyApartments = new();

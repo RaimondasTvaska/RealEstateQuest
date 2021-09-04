@@ -15,5 +15,6 @@ namespace RealEstateQuest.Models
         public int[] BrokersIds { get; set; }
         public BrokerModel Broker { get; set; }
         public List<BrokerModel> Brokers { get; set; }
+        public SortFilterModel SortFilter { get; set; }
     }
 }

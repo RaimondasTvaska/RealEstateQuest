@@ -14,12 +14,14 @@ namespace RealEstateQuest.Controllers
         private CompanyDBService _companyDB;
         private RealEstateDBService _realEstateDB;
         private BrokerDBService _brokerDB;
+        private ApartmentDBService _apartmentDB;
 
-        public CompanyController(CompanyDBService companyDB, RealEstateDBService realEstateDB, BrokerDBService brokerDB)
+        public CompanyController(CompanyDBService companyDB, RealEstateDBService realEstateDB, BrokerDBService brokerDB, ApartmentDBService apartmentDB)
         {
             _companyDB = companyDB;
             _realEstateDB = realEstateDB;
             _brokerDB = brokerDB;
+            _apartmentDB = apartmentDB;
         }
 
 
@@ -60,22 +62,27 @@ namespace RealEstateQuest.Controllers
         // GET: CompanyController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            CompanyModel company = _companyDB.AllCompanies().FirstOrDefault(c => c.Id == id);
+            List<BrokerModel> brokers = _brokerDB.AllBrokers();
+            List<ApartmentModel> apartments = _apartmentDB.AllApartments();
+            RealEstateModel realEstateModel = new()
+            {
+                CompanyAddInformation = company,
+                Brokers = brokers,
+                Apartments = apartments
+
+            };
+            return View(realEstateModel);
         }
 
         // POST: CompanyController/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //public ActionResult Edit(int id, RealEstateModel realEstate)
+        //{
+        //    _companyDB.EditCompany(realEstate);
+
+        //    return RedirectToAction("Index");
+        //}
 
         // GET: CompanyController/Delete/5
         public ActionResult Delete(int id)

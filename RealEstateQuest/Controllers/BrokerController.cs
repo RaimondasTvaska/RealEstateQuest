@@ -4,6 +4,7 @@ using RealEstateQuest.Models;
 using RealEstateQuest.Services;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,12 +14,18 @@ namespace RealEstateQuest.Controllers
     {
         private BrokerDBService _brokerDB;
         private CompanyDBService _companyDB;
+        private SqlConnection _connection;
+        private RealEstateDBService _realEstateDB;
 
-        public BrokerController(BrokerDBService brokerDB, CompanyDBService companyDB)
+        public BrokerController(BrokerDBService brokerDB, CompanyDBService companyDB, SqlConnection connection, RealEstateDBService realEstateDB)
         {
             _brokerDB = brokerDB;
             _companyDB = companyDB;
+            _connection = connection;
+            _realEstateDB = realEstateDB;
         }
+
+
         // GET: BrokerController
         public ActionResult Index()
         {
@@ -70,29 +77,32 @@ namespace RealEstateQuest.Controllers
         public ActionResult Edit(int id, RealEstateModel realEstate)
         {
             
-            _brokerDB.EditBroker(realEstate);
+            _brokerDB.EditBroker(id,realEstate);
 
             return RedirectToAction("Index");
         }
 
         // GET: BrokerController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteBroker(int id)
         {
-            return View();
+            BrokerModel broker = _brokerDB.AllBrokers().FirstOrDefault(b => b.Id == id);
+            List<CompanyModel> companies = _companyDB.AllCompanies();
+            RealEstateModel realEstateModel = new()
+            {
+                Broker = broker,
+                Companies = companies
+            };
+            return View(realEstateModel);
         }
 
         // POST: BrokerController/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteBroker(int id, RealEstateModel realEstate)
+        // GET: BrokerController/Delete/5)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _brokerDB.DeleteBroker(id,realEstate);
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -42,54 +42,69 @@
             <th>
                 @Html.DisplayNameFor(model => model.CompanyAddInformation.CompanyName)
             </th>
-            @*<th>
-            @Html.DisplayNameFor(model => model.ApartmentAddInformation.Broker_Id)
-        </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.ApartmentAddInformation.Broker_Id)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in @Model.Apartments) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Street)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HouseNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FlatNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FlatFloor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BuildingFloors)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Area)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Company_Id)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.CompanyAddInformation.CompanyName)
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.Broker_Id)
-        </td>*@
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in @Model.Apartments)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Street)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HouseNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FlatNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FlatFloor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BuildingFloors)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Area)
+                </td>
+                @if (item.Company_Id == null)
+                {
+                    item.Company_Id = 0;
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Company_Id)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(model => model.CompanyAddInformation.CompanyName)
+                </td>
+                @if (item.Broker_Id == null)
+                {
+                    item.Broker_Id = 0;
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Broker_Id)
+                    </td>
+                }
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

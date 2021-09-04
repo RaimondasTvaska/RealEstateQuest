@@ -17,5 +17,6 @@ namespace RealEstateQuest.Models
                 return First_Name + " " + Surname;
             }
         }
+        public string CompanyName { get; set; }
     }
 }
